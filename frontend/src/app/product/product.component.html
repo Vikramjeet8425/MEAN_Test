@@ -1,0 +1,43 @@
+<div class="container">
+    <h2>{{ id ? 'Edit' : 'Create' }} Product</h2>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div><label>Name</label><input formControlName="name" /></div>
+        <div><label>Price</label><input type="number" formControlName="price" /></div>
+        <div><label>Description</label><textarea formControlName="description"></textarea></div>
+        <div><button type="submit">Save</button><button type="button" (click)="cancel()">Cancel</button></div>
+    </form>
+</div>
+
+
+<div class="container">
+    <h2>Products</h2>
+    <div *ngIf="loading">Loading...</div>
+    <table *ngIf="!loading && items.length">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let it of items">
+                <td>{{it.name}}</td>
+                <td>{{it.price}}</td>
+                <td>{{it.description}}</td>
+                <td><button (click)="edit(it._id)">Edit</button><button (click)="deleteItem(it._id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="!loading && !items.length">No products</div>
+</div>
+
+<div class="container">
+    <h1 style="text-align: center;">NASA Picture Of The Day</h1>
+    <h3>{{nasaData.title}}</h3>
+    <img [src]="nasaData.hdurl" alt="Astro Image">
+    <span>{{nasaData.date}}</span>
+    <p>{{nasaData.explanation}}</p>
+</div>
