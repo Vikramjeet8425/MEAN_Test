@@ -25,6 +25,7 @@ export class LoginComponent {
     };
     this.service.login(data).subscribe((data: any) => {
       if(data){
+        localStorage.setItem('userId', data.userId);
         localStorage.setItem('token', data.token);
         this.router.navigate(['/product']);
       } else {

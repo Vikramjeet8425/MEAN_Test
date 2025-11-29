@@ -1,5 +1,14 @@
 const Order = require('../models/Order');
 
+exports.getAll = async (req,res) => {
+    try {
+        const items = await Order.find().sort({ createdAt: -1 });
+        res.json(items);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 exports.createOrder = async (req,res) => {
     try {
         const o = await Order.create(req.body);

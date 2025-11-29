@@ -6,7 +6,6 @@ require('dotenv').config();
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
 const orderRoutes = require('./routes/orderRoutes');
-const weatherRoutes = require('./routes/weatherRoutes');
 
 const app = express();
 app.use(cors());
@@ -21,6 +20,5 @@ app.get('/', (req,res)=> res.send('MEAN CRUD API'));
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/orders', orderRoutes);
-app.use('/api/weather', weatherRoutes);
 
 module.exports = app;

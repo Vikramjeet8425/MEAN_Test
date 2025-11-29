@@ -34,10 +34,82 @@
     <div *ngIf="!loading && !items.length">No products</div>
 </div>
 
+<div class="container" *ngIf="!orderId">
+    <h2>Create Order</h2>
+
+    <form (ngSubmit)="orderSubmit()">
+
+        <label>Select Products:</label>
+        <!-- <select multiple [ngModelOptions]="{ standalone: true }" [(ngModel)]="order.productIds" name="productIds"
+            (change)="calculateTotal()" (ngModelChange)="onMultiChange($event)">
+            <option *ngFor="let product of items" [ngValue]="product._id">
+                {{ product.name }} - ₹{{ product.price }}
+            </option>
+        </select> -->
+        <div class="list-group mb-3">
+            <label class="list-group-item" *ngFor="let product of items">
+                <input type="checkbox" class="form-check-input me-2" [value]="product._id"
+                    [checked]="order.productIds.includes(product._id)" (change)="toggleProduct($event, product)">
+                {{ product.name }} - ₹{{ product.price }}
+            </label>
+        </div>
+
+        <label>Total Amount: </label>
+        <input type="number" [(ngModel)]="order.totalAmount" name="amount" required />
+
+        <button type="submit">Create Order</button>
+    </form>
+</div>
+
+<div class="container" *ngIf="orderId">
+    <h2>Edit Order</h2>
+
+    <form (ngSubmit)="orderSubmit()">
+
+        <label>Select Products:</label>
+        <div class="list-group mb-3">
+            <label class="list-group-item" *ngFor="let product of items">
+                <input type="checkbox" class="form-check-input me-2" [value]="product._id"
+                    [checked]="order.productIds.includes(product._id)" (change)="toggleProduct($event, product)">
+                {{ product.name }} - ₹{{ product.price }}
+            </label>
+        </div>
+
+        <label>Total Amount: </label>
+        <input type="number" [(ngModel)]="order.totalAmount" name="amount" required />
+
+        <button type="submit">Edit Order</button>
+    </form>
+</div>
+
 <div class="container">
+    <h2>Orders</h2>
+    <div *ngIf="loading">Loading...</div>
+    <table *ngIf="!loading && items.length">
+        <thead>
+            <tr>
+                <th>OrderID</th>
+                <th>Total Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders">
+                <td>{{order._id}}</td>
+                <td>{{order.totalAmount}}</td>
+                <td><button (click)="editOrder(order._id)">Edit</button><button
+                        (click)="deleteOrder(order._id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="container" *ngIf="nasaData">
     <h1 style="text-align: center;">NASA Picture Of The Day</h1>
     <h3>{{nasaData.title}}</h3>
-    <img [src]="nasaData.hdurl" alt="Astro Image">
+    <img [src]="nasaData.hdurl" alt="Astro Image"><br>
     <span>{{nasaData.date}}</span>
     <p>{{nasaData.explanation}}</p>
 </div>
